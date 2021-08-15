@@ -60,11 +60,9 @@ async def play(ctx, url):
 @client.command()
 async def pause(ctx):
     await ctx.voice_client.pause()
-    await ctx.send("Paused!")
 
 @client.command()
 async def resume(ctx):
     await ctx.voice_client.resume()
-    await ctx.send("Resumed!")
-
+    
 client.run(os.getenv('BOT_TOKEN'))
