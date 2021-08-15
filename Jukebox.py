@@ -60,8 +60,7 @@ async def play(ctx, url):
 @client.command()
 async def pause(ctx):
     await ctx.voice_client.pause()
-    if ctx.voice_client.pause() == True:
-        await ctx.send("Paused!")
+    await ctx.send("Paused!")
 
 @client.command()
 async def resume(ctx):
