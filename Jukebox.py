@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import os
 import youtube_dl
+import ctypes
+import ctypes.util
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
