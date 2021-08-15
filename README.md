@@ -1,3 +1,3 @@
-# JuyoungkeBox
+# JuwukBox
 
-(Ju)kebox made by Joo Young Choi.
+Jukebox bot made by Joo Young Choi.
