@@ -1,3 +1,3 @@
 # JuyoungkeBox
 
-(Ju)kebox!
+(Ju)kebox made by Joo Young Choi.
