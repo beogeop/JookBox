@@ -14,7 +14,8 @@ client = commands.Bot(command_prefix = '.', intents = intents)
 
 @client.event
 async def on_ready():
-    print('Logged in as {0.user}'.format(client)) 
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".play"))
+    print('Logged in as {0.user}'.format(client))
 
 @client.command()
 async def dc(ctx):
