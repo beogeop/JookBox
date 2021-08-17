@@ -1,14 +1,16 @@
 import discord
 from discord.ext import commands
 import os
+from dotenv import load_dotenv
 import youtube_dl
 import ctypes
 import ctypes.util
 
-youtube_dl.utils.bug_reports_message = lambda: ''
+load_dotenv(os.path.join(os.getcwd(), '.env'))
 
 intents = discord.Intents.all()
 intents.members = True
+intents.voice_states = True
 
 client = commands.Bot(command_prefix = '.', intents = intents)
 
@@ -16,6 +18,14 @@ client = commands.Bot(command_prefix = '.', intents = intents)
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".play"))
     print('Logged in as {0.user}'.format(client))
+
+@client.event
+async def on_voice_state_update(member, before, after):
+    voice_state = member.guild.voice_client
+    if voice_state is None:
+        return
+    if len(voice_state.channel.members) == 1:
+        await voice_state.disconnect()
 
 @client.command()
 async def dc(ctx):
