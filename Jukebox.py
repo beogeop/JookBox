@@ -8,6 +8,8 @@ import ctypes.util
 
 load_dotenv()
 
+youtube_dl.utils.bug_reports_message = lambda: ''
+
 intents = discord.Intents.all()
 intents.members = True
 intents.voice_states = True
@@ -55,13 +57,13 @@ async def play(ctx, url):
     'logtostderr': False,
     'quiet': True,
     'no_warnings': True,
-    'default_search': 'ytsearch',
-    'source_address': '0.0.0.0',
+    'default_search': 'auto',
+    'source_address': '0.0.0.0'
     }
 
     ffmpeg_options = {
     'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
-    'options': '-vn',
+    'options': '-vn'
     }
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
