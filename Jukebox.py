@@ -47,8 +47,6 @@ async def play(ctx, url):
 
     ydl_opts = {
     'format': 'bestaudio/best',
-    'extractaudio': True,
-    'audioformat': 'mp3',
     'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
     'restrictfilenames': True,
     'noplaylist': True,
@@ -57,11 +55,11 @@ async def play(ctx, url):
     'logtostderr': False,
     'quiet': True,
     'no_warnings': True,
-    'default_search': 'ytsearch',
+    'default_search': 'auto',
     'source_address': '0.0.0.0'
     }
 
-    ffmpeg_options = {
+    ffmpeg_opts = {
     'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
     'options': '-vn'
     }
@@ -69,7 +67,7 @@ async def play(ctx, url):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=False)
         url2 = info['formats'][0]['url']
-        source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opt)
+        source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
         vc.play(source)
 
 @client.command()
