@@ -6,7 +6,7 @@ import youtube_dl
 import ctypes
 import ctypes.util
 
-load_dotenv(os.path.join(os.getcwd(), '.env'))
+load_dotenv()
 
 intents = discord.Intents.all()
 intents.members = True
