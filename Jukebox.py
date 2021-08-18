@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import asyncio
 import os
 from dotenv import load_dotenv
 import youtube_dl
@@ -27,6 +28,7 @@ async def on_voice_state_update(member, before, after):
     if voice_state is None:
         return
     if len(voice_state.channel.members) == 1:
+        await asyncio.sleep(3)
         await voice_state.disconnect()
 
 @client.command()
