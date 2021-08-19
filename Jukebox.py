@@ -66,6 +66,37 @@ async def play(ctx, url):
         await ctx.voice_client.move_to(voice_channel)
     ctx.voice_client.stop()
     vc = ctx.voice_client
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        if url.lower() == "chugjug":
+            info = ydl.extract_info("https://youtu.be/qwJxr1TDhgU", download=False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+            vc.play(source)
+
+        elif url.lower() == "takeonme":
+            info = ydl.extract_info("https://youtu.be/Ze2xWPksgF0", download=False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+            vc.play(source)
+
+        elif url.lower() == "gloop":
+            info = ydl.extract_info("https://youtu.be/o-ofNGM5dI8", download=False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+            vc.play(source)
+
+        elif url.lower() == "revenge":
+            info = ydl.extract_info("https://youtu.be/Ifb-O5DoDVA", download=False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+            vc.play(source)
+
+        elif url.lower() == "rick":
+            info = ydl.extract_info("https://youtu.be/zbr78RvPoYk", download=False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+            vc.play(source)
     
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=False)
@@ -82,52 +113,5 @@ async def pause(ctx):
 async def resume(ctx):
     await ctx.message.add_reaction('▶️')
     await ctx.voice_client.resume()
-
-@client.command()
-async def cover(ctx, song):
-    if ctx.author.voice is None:
-        await ctx.send("You're not in the voice channel!")
-    voice_channel = ctx.author.voice.channel
-    if ctx.voice_client is None:
-        await voice_channel.connect()
-    else:
-        await ctx.voice_client.move_to(voice_channel)
-    ctx.voice_client.stop()
-    vc = ctx.voice_client
-    
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        if song.lower() == "chugjug":
-            info = ydl.extract_info("https://youtu.be/qwJxr1TDhgU", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        if song.lower() == "takeonme":
-            info = ydl.extract_info("https://youtu.be/Ze2xWPksgF0", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        if song.lower() == "gloop":
-            info = ydl.extract_info("https://youtu.be/o-ofNGM5dI8", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        if song.lower() == "revenge":
-            info = ydl.extract_info("https://youtu.be/Ifb-O5DoDVA", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        if song.lower() == "rick":
-            info = ydl.extract_info("https://youtu.be/zbr78RvPoYk", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
 
 client.run(os.getenv('BOT_TOKEN'))
