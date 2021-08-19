@@ -65,7 +65,7 @@ async def play(ctx, url):
         await ctx.voice_client.move_to(voice_channel)
     ctx.voice_client.stop()
     vc = ctx.voice_client
-
+    
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=False)
         url2 = info['formats'][0]['url']
@@ -74,12 +74,12 @@ async def play(ctx, url):
 
 @client.command()
 async def pause(ctx):
-    await ctx.voice_client.pause()
     await ctx.send("Paused!")
+    await ctx.voice_client.pause()
 
 @client.command()
 async def resume(ctx):
-    await ctx.voice_client.resume()
     await ctx.send("Resumed!")
+    await ctx.voice_client.resume()
     
 client.run(os.getenv('BOT_TOKEN'))
