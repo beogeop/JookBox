@@ -52,6 +52,7 @@ async def on_voice_state_update(member, before, after):
 
 @client.command()
 async def dc(ctx):
+    await ctx.send("⏏️")
     await ctx.voice_client.disconnect()
 
 @client.command()
@@ -74,12 +75,12 @@ async def play(ctx, url):
 
 @client.command()
 async def pause(ctx):
-    await ctx.send("Paused!")
+    await ctx.send("⏸")
     await ctx.voice_client.pause()
 
 @client.command()
 async def resume(ctx):
-    await ctx.send("Resumed!")
+    await ctx.send("▶️")
     await ctx.voice_client.resume()
     
 client.run(os.getenv('BOT_TOKEN'))
