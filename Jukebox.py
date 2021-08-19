@@ -27,11 +27,9 @@ async def on_voice_state_update(member, before, after):
     voice_state = member.guild.voice_client
     if voice_state is None:
         return
-    while len(voice_state.channel.members) == 1:
+    if len(voice_state.channel.members) == 1:
         await asyncio.sleep(1)
         await voice_state.disconnect()
-    else:
-        continue
 
 @client.command()
 async def dc(ctx):
