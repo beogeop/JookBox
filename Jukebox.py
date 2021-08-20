@@ -36,8 +36,6 @@ intents.voice_states = True
 
 client = commands.Bot(command_prefix = '.', intents = intents)
 
-queue = []
-
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".play"))
@@ -58,7 +56,7 @@ async def dc(ctx):
     await ctx.voice_client.disconnect()
 
 @client.command()
-async def p(ctx):
+async def play(ctx, url):
     if ctx.author.voice is None:
         await ctx.send("You're not in the voice channel!")
     voice_channel = ctx.author.voice.channel
@@ -67,54 +65,6 @@ async def p(ctx):
     else:
         await ctx.voice_client.move_to(voice_channel)
     ctx.voice_client.stop()
-    
-    vc = ctx.voice_client
-        
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(queue, download=False)
-        url2 = info['formats'][0]['url']
-        source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-        vc.play(source)
-        del(queue[0])
-
-@client.command()
-async def queue(ctx, url):
-    queue.append(url)
-    await ctx.send(f'`{url}` added to the queue!')
-
-@client.command()
-async def remove(ctx, number):
-    try:
-        del(queue[int(number)])
-        await ctx.send(f'Your queue is now `{queue}!`')
-    except:
-        await ctx.send('Your queue is either empty or the index of the list is out of range!')
-
-@client.command()
-async def view(ctx):
-    await ctx.send(f'Your queue is now `{queue}!`')
-
-@client.command()
-async def pause(ctx):
-    await ctx.message.add_reaction('⏸')
-    await ctx.voice_client.pause()
-
-@client.command()
-async def resume(ctx):
-    await ctx.message.add_reaction('▶️')
-    await ctx.voice_client.resume()
-
-@client.command()
-async def cover(ctx):
-    if ctx.author.voice is None:
-        await ctx.send("You're not in the voice channel!")
-    voice_channel = ctx.author.voice.channel
-    if ctx.voice_client is None:
-        await voice_channel.connect()
-    else:
-        await ctx.voice_client.move_to(voice_channel)
-    ctx.voice_client.stop()
-    
     vc = ctx.voice_client
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -147,6 +97,21 @@ async def cover(ctx):
             url2 = info['formats'][0]['url']
             source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
             vc.play(source)
+    
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+        url2 = info['formats'][0]['url']
+        source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+        vc.play(source)
 
+@client.command()
+async def pause(ctx):
+    await ctx.message.add_reaction('⏸')
+    await ctx.voice_client.pause()
+
+@client.command()
+async def resume(ctx):
+    await ctx.message.add_reaction('▶️')
+    await ctx.voice_client.resume()
 
 client.run(os.getenv('BOT_TOKEN'))
