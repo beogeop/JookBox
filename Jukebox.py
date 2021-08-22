@@ -4,6 +4,8 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import youtube_dl
+from youtube_search import YoutubeSearch
+import json
 import ctypes
 import ctypes.util
 
@@ -56,7 +58,8 @@ async def dc(ctx):
     await ctx.voice_client.disconnect()
 
 @client.command()
-async def play(ctx, url):
+async def play(ctx, *, search_terms):
+    
     if ctx.author.voice is None:
         await ctx.send("You're not in the voice channel!")
     voice_channel = ctx.author.voice.channel
@@ -66,44 +69,21 @@ async def play(ctx, url):
         await ctx.voice_client.move_to(voice_channel)
     ctx.voice_client.stop()
     vc = ctx.voice_client
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        if url.lower() == "chugjug":
-            info = ydl.extract_info("https://youtu.be/qwJxr1TDhgU", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-        elif url.lower() == "takeonme":
-            info = ydl.extract_info("https://youtu.be/Ze2xWPksgF0", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-        elif url.lower() == "gloop":
-            info = ydl.extract_info("https://youtu.be/o-ofNGM5dI8", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-        elif url.lower() == "revenge":
-            info = ydl.extract_info("https://youtu.be/Ifb-O5DoDVA", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
-
-        elif url.lower() == "rick":
-            info = ydl.extract_info("https://youtu.be/zbr78RvPoYk", download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-            vc.play(source)
     
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=False)
-        url2 = info['formats'][0]['url']
-        source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
-        vc.play(source)
-
+    results = YoutubeSearch(search_terms, max_results = 1).to_json()
+    try:
+        yt_id = str(json.loads(results)['videos'][0]['id'])
+        yt_url = "https://www.youtube.com/watch?v=" + yt_id
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(yt_url, download = False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+            vc.play(source)
+    except:
+        pass
+        print("No results found.")
+        print(results)
+        
 @client.command()
 async def pause(ctx):
     await ctx.message.add_reaction('⏸')
