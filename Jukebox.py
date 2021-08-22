@@ -75,7 +75,7 @@ async def p(ctx, *, search_terms):
     embed = discord.Embed(
         title = 'Currently Playing',
         description = str(json.loads(results)['videos'][0]['title']),
-        colour = discord.Colour.dark_theme()
+        colour = discord.Colour.blue()
     )
 
     embed.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
