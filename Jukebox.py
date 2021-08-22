@@ -71,6 +71,17 @@ async def p(ctx, *, search_terms):
     vc = ctx.voice_client
     
     results = YoutubeSearch(search_terms, max_results = 1).to_json()
+
+    embed = discord.Embed(
+        title = 'Currently Playing',
+        description = str(json.loads(results)['videos'][0]['title']),
+        colour = discord.Colour.blue()
+    )
+
+    embed.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
+    
+    await ctx.send(embed=embed)
+
     try:
         yt_id = str(json.loads(results)['videos'][0]['id'])
         yt_url = "https://www.youtube.com/watch?v=" + yt_id
@@ -82,6 +93,7 @@ async def p(ctx, *, search_terms):
     except:
         pass
         print("No results found.")
+
         
 @client.command()
 async def pause(ctx):
