@@ -82,7 +82,6 @@ async def p(ctx, *, search_terms):
     except:
         pass
         print("No results found.")
-        print(results)
         
 @client.command()
 async def pause(ctx):
