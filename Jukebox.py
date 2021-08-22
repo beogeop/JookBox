@@ -58,7 +58,7 @@ async def dc(ctx):
     await ctx.voice_client.disconnect()
 
 @client.command()
-async def play(ctx, *, search_terms):
+async def p(ctx, *, search_terms):
     
     if ctx.author.voice is None:
         await ctx.send("You're not in the voice channel!")
