@@ -85,7 +85,7 @@ async def p(ctx, *, search_terms):
     embed2 = discord.Embed(
         title = 'Queued',
         description = str(json.loads(results)['videos'][0]['title']),
-        colour = discord.Colour.blue()
+        colour = discord.Colour.purple()
     )
 
     embed2.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
@@ -99,12 +99,10 @@ async def p(ctx, *, search_terms):
             source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
             vc.play(source)
             await ctx.send(embed=embed1)
-    
     except:
         pass
         print("No results found.")
     
-        
 @client.command()
 async def pause(ctx):
     await ctx.message.add_reaction('⏸')
