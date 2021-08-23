@@ -97,7 +97,7 @@ async def pause(ctx):
 
 @client.command()
 async def resume(ctx):
-    await ctx.message.add_reaction('▶️')
+    await ctx.message.add_reaction('⏯')
     await ctx.voice_client.resume()
 
 client.run(os.getenv('BOT_TOKEN'))
