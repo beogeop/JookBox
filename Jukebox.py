@@ -32,6 +32,8 @@ ffmpeg_opts = {
     'options': '-vn'
     }
 
+queue = []
+
 intents = discord.Intents.all()
 intents.members = True
 intents.voice_states = True
@@ -72,15 +74,21 @@ async def p(ctx, *, search_terms):
     
     results = YoutubeSearch(search_terms, max_results = 1).to_json()
 
-    embed = discord.Embed(
+    embed1 = discord.Embed(
         title = 'Currently Playing',
         description = str(json.loads(results)['videos'][0]['title']),
         colour = discord.Colour.blue()
     )
 
-    embed.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
-    
-    await ctx.send(embed=embed)
+    embed1.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
+
+    embed2 = discord.Embed(
+        title = 'Queued',
+        description = str(json.loads(results)['videos'][0]['title']),
+        colour = discord.Colour.blue()
+    )
+
+    embed2.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
 
     try:
         yt_id = str(json.loads(results)['videos'][0]['id'])
@@ -90,10 +98,12 @@ async def p(ctx, *, search_terms):
             url2 = info['formats'][0]['url']
             source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
             vc.play(source)
+            await ctx.send(embed=embed1)
+    
     except:
         pass
         print("No results found.")
-
+    
         
 @client.command()
 async def pause(ctx):
