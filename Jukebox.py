@@ -32,8 +32,6 @@ ffmpeg_opts = {
     'options': '-vn'
     }
 
-queue = []
-
 intents = discord.Intents.all()
 intents.members = True
 intents.voice_states = True
@@ -45,7 +43,6 @@ async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".p"))
     print('Logged in as {0.user}'.format(client))
 
-
 @client.event
 async def on_voice_state_update(member, before, after):
     voice_state = member.guild.voice_client
@@ -55,19 +52,10 @@ async def on_voice_state_update(member, before, after):
         await asyncio.sleep(1)
         await voice_state.disconnect()
 
-
 @client.command()
 async def dc(ctx):
     await ctx.message.add_reaction('⏏️')
     await ctx.voice_client.disconnect()
-
-
-def play_next(ctx):
-    if len(queue) >= 1:
-        del queue[0]
-        vc = ctx.voice_client
-        vc.play(discord.FFmpegOpusAudio(url2, **ffmpeg_opts), after = lambda e: play_next(ctx))    
-
 
 @client.command()
 async def p(ctx, *, search_terms):
@@ -83,7 +71,6 @@ async def p(ctx, *, search_terms):
     vc = ctx.voice_client
     
     results = YoutubeSearch(search_terms, max_results = 1).to_json()
-
     yt_id = str(json.loads(results)['videos'][0]['id'])
     yt_url = "https://www.youtube.com/watch?v=" + yt_id
 
@@ -95,25 +82,13 @@ async def p(ctx, *, search_terms):
 
     embed1.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
 
-    embed2 = discord.Embed(
-        title = 'Queued',
-        description = str(json.loads(results)['videos'][0]['title']),
-        colour = discord.Colour.dark_theme()
-    )
-
-    embed2.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
-
-    queue.append(yt_url)
-    if not vc.is_playing:
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(queue[0], download = False)
-            url2 = info['formats'][0]['url']
-            if not vc.is_playing():
-                vc.play(discord.FFmpegOpusAudio(url2, **ffmpeg_opts), after = lambda e: play_next(ctx))
-                await ctx.send(embed=embed1)
-    else:
-        await ctx.send(embed=embed2)
-
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(yt_url, download = False)
+        url2 = info['formats'][0]['url']
+        source = await discord.FFmpegOpusAudio.from_probe(url2, **ffmpeg_opts)
+        vc.play(source)
+        await ctx.send(embed=embed1)
+    
 
 @client.command()
 async def pause(ctx):
