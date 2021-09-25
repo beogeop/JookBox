@@ -6,7 +6,7 @@
 ![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
 
 
-## Current Features:
+## Current Features
 
 - Only joins channel when the channel is populated
 - Auto leave when channel is empty
@@ -14,7 +14,7 @@
 - Reactions and video embeds
 - Sexy icon
 
-## Missing Features:
+## Missing Features
 
 - Queue and loop system
 - Utilization of cogs and an efficient organization system
