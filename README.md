@@ -8,7 +8,7 @@
 
 ## Current Features
 
-- Only joins channel when the channel is populated
+- Only joins when the channel is populated
 - Auto leave when channel is empty
 - Play, pause, resume, disconnect commands
 - Reactions and video embeds
