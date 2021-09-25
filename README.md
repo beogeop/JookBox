@@ -12,12 +12,11 @@
 - Auto leave when channel is empty
 - Play, pause, resume, disconnect commands
 - Reactions and video embeds
-- Sexy icon
+- Queue system
 
 ## Missing Features
 
-- Queue and loop system
-- Utilization of cogs
+- Loop system
 - Lack of Spotify and Soundcloud support
  
  ## Dependencies
