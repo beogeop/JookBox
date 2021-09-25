@@ -1,8 +1,8 @@
 # JookBox
 
-![Icon](https://github.com/Chejuyeong/JookBox/blob/main/images/bg2.png")
+![Icon](https://github.com/Chejuyeong/JookBox/blob/main/images/bg2.png)
 
-# A wild Jookbox Bot has appeared![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
+# A wild Jookbox Bot has appeared!![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
 
 
 ## Current Features:
