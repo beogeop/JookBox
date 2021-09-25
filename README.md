@@ -23,6 +23,6 @@
  
  - discord.py
  - ffmpeg
- - dotenv
+ - python-dotenv
  - youtube-dl
- - youtube_search
+ - youtubesearchpython

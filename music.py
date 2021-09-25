@@ -1,8 +1,7 @@
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
-from youtube_search import YoutubeSearch
-import json
+from youtubesearchpython import VideosSearch
 
 class music(commands.Cog):
     def __init__(self, bot):
@@ -55,17 +54,17 @@ class music(commands.Cog):
     async def p(self, ctx, *args):
         query = " ".join(args)
 
-        results = YoutubeSearch(*args, max_results = 1).to_json()
-        yt_id = str(json.loads(results)['videos'][0]['id'])
+        results = VideosSearch(*args, limit=1)
+        yt_id = results.result['videos'][0]['id']
         yt_url = "https://www.youtube.com/watch?v=" + yt_id
 
         embed1 = discord.Embed(
             title = "Song Queued",
-            description = str(json.loads(results)['videos'][0]['title']),
+            description = results.result['videos'][0]['title'],
             colour = discord.Colour.blurple()
         )
 
-        embed1.set_thumbnail(url=str(json.loads(results)['videos'][0]['thumbnails'][0]))
+        embed1.set_thumbnail(url=results.result['videos'][0]['thumbnails'][0])
 
         vc = ctx.author.voice.channel
         if vc is None:
