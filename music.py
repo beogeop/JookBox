@@ -70,17 +70,15 @@ class music(commands.Cog):
     async def p(self, ctx, *args):
         query = " ".join(args)
 
-        results = VideosSearch(*args, limit=1)
-        yt_id = results.result()['videos'][0]['id']
-        yt_url = "https://www.youtube.com/watch?v=" + yt_id
+        videosSearch = VideosSearch(*args, limit=1)
 
         embed1 = discord.Embed(
-            title = "Song Queued",
-            description = results.result()['videos'][0]['title'],
+            title = videosSearch.result()['title'][0],
+            description = videosSearch.result()['link'][0],
             colour = discord.Colour.blurple()
         )
 
-        embed1.set_thumbnail(url=results.result()['videos'][0]['thumbnails'][0])
+        embed1.set_thumbnail(url=videosSearch.result()['thumbnails'][0])
 
         vc = ctx.author.voice.channel
         if vc is None:
