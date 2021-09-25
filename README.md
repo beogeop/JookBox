@@ -17,7 +17,7 @@
 ## Missing Features
 
 - Queue and loop system
-- Utilization of cogs and an efficient organization system
+- Utilization of cogs
 - Lack of Spotify and Soundcloud support
  
  ## Dependencies
