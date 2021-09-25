@@ -44,8 +44,7 @@ class music(commands.Cog):
                 self.vc = await self.queue[0][1].connect()
             else:
                 self.vc = await self.bot.move_to(self.queue[0][1])
-
-            print(self.queue)
+                
             self.queue.pop(0)
 
             self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
