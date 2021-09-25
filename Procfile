@@ -1,1 +1,1 @@
-worker: python Jukebox.py
+worker: python main.py
