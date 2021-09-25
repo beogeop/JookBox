@@ -36,7 +36,7 @@ intents = discord.Intents.all()
 intents.members = True
 intents.voice_states = True
 
-client = commands.Bot(command_prefix = '.', intents = intents)
+client = commands.Bot(command_prefix = '-', intents = intents)
 
 @client.event
 async def on_ready():
