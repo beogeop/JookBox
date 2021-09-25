@@ -70,7 +70,7 @@ class music(commands.Cog):
     async def p(self, ctx, *args):
         query = " ".join(args)
 
-        videosSearch = VideosSearch(*args, limit=1)
+        videosSearch = VideosSearch(*args, limit=2)
 
         embed1 = discord.Embed(
             title = "Song Queued",
