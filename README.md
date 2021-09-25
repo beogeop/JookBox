@@ -1,8 +1,9 @@
 # JookBox
 
-<img src="https://avatars.githubusercontent.com/u/36101493?s=200&v=4">
+![Icon](https://github.com/Chejuyeong/JookBox/blob/main/images/bg2.png)
 
-# A jukebox bot made with python! ![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
+# A wild Jookbox Bot has appeared!
+![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
 
 
 ## Current Features:
