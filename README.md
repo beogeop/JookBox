@@ -25,4 +25,4 @@
  - ffmpeg
  - python-dotenv
  - youtube-dl
- - youtubesearchpython
+ - youtube-search-python

@@ -5,4 +5,4 @@ youtube_dl
 pynacl
 python-dotenv
 ffmpeg
-youtubesearchpython
+youtube-search-python
