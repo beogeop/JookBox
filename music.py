@@ -105,6 +105,7 @@ class music(commands.Cog):
             self.vc.stop()
             await ctx.message.add_reaction("⏭️")
             await self.play_music()
+            await ctx.guild.change_voice_state(channel=self.vc, self_mute=False, self_deaf=True)
 
     @commands.command()
     async def pause(self, ctx):
