@@ -82,8 +82,8 @@ class music(commands.Cog):
 
         embed1.set_thumbnail(url=videosResult['result'][0]['thumbnails'][0]['url'])
 
-        vc = ctx.author.voice.channel 
-        if vc is None:
+        voice_channel = ctx.author.voice.channel
+        if ctx.author.voice is None:
             await ctx.send("You're not in the voice channel!")
         else:
             song = self.search_yt(url)
@@ -91,12 +91,12 @@ class music(commands.Cog):
                 await ctx.send("Error! Could not download song.")
             else:
                 await ctx.send(embed=embed1)
-                self.queue.append([song, vc])
+                self.queue.append([song, voice_channel])
 
                 if self.is_playing == False:
                     await self.play_music()
 
-        await ctx.guild.change_voice_state(channel=vc, self_mute=False, self_deaf=True)
+        await ctx.guild.change_voice_state(channel=voice_channel, self_mute=False, self_deaf=True)
         
 
     @commands.command()
