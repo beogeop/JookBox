@@ -59,7 +59,7 @@ class music(commands.Cog):
             if self.vc == "" or not self.vc.is_connected():
                 self.vc = await self.queue[0][1].connect()
             else:
-                self.vc = await self.bot.move_to(self.queue[0][1])
+                await self.vc.move_to(self.queue[0][1])
                 
             self.queue.pop(0)
 
