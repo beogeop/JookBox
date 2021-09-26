@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
-from youtubesearchpython import VideosSearch
+from youtubesearchpython.__future__ import VideosSearch
 
 class music(commands.Cog):
     def __init__(self, bot):
@@ -67,24 +67,25 @@ class music(commands.Cog):
             self.is_playing = False
 
     @commands.command()
-    async def p(self, ctx, *args):
-        query = " ".join(args)
+    async def p(self, ctx, *, search_terms):
 
-        videosSearch = VideosSearch(*args, limit=1)
+        videosSearch = VideosSearch(search_terms, limit=1)
+        videosResult = await videosSearch.next()
+        url = videosResult['result'][-1]['link']
 
         embed1 = discord.Embed(
             title = "Song Queued",
-            description = videosSearch.result()['result'][0]['title'],
+            description = videosResult['result'][0]['title'],
             colour = discord.Colour.blurple()
         )
 
-        embed1.set_thumbnail(url=videosSearch.result()['result'][0]['thumbnails'][0]['url'])
+        embed1.set_thumbnail(url=videosResult['result'][0]['thumbnails'][0]['url'])
 
         vc = ctx.author.voice.channel
         if vc is None:
             await ctx.send("You're not in the voice channel!")
         else:
-            song = self.search_yt(query)
+            song = self.search_yt(url)
             if type(song) == type(True):
                 await ctx.send("Error! Could not download song.")
             else:
