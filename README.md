@@ -10,7 +10,7 @@
 
 - Only joins when the channel is populated
 - Auto leave when channel is empty
-- Play, pause, resume, disconnect commands
+- Play, pause, resume, skip, disconnect commands
 - Reactions and video embeds
 - Queue system
 
