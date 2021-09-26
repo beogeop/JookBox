@@ -20,7 +20,6 @@ async def on_ready():
 
 @bot.event
 async def on_voice_state_update(member, before, after):
-    await member.edit(deafen=True)
     voice_state = member.guild.voice_client
     if voice_state is None:
         return
