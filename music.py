@@ -83,7 +83,7 @@ class music(commands.Cog):
         embed1.set_thumbnail(url=videosResult['result'][0]['thumbnails'][0]['url'])
 
         voice_channel = ctx.author.voice.channel
-        if ctx.author.voice is None:
+        if voice_channel is None:
             await ctx.send("You're not in the voice channel!")
         else:
             song = self.search_yt(url)
