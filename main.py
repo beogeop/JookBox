@@ -7,8 +7,6 @@ from music import music
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix='-', intents = discord.Intents.all())
-
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="-p"))
@@ -22,6 +20,8 @@ async def on_voice_state_update(member, before, after):
     if len(voice_state.channel.members) == 1:
         await asyncio.sleep(1)
         await voice_state.disconnect()
+
+
 
 bot.add_cog(music(bot))
 
