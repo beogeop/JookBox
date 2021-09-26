@@ -4,6 +4,7 @@ from youtube_dl import YoutubeDL
 from youtubesearchpython.__future__ import VideosSearch
 
 
+
 class music(commands.Cog):
     def __init__(self, bot):
         
@@ -39,14 +40,14 @@ class music(commands.Cog):
 
         return {'source': info['formats'][0]['url'], 'title': info['title']}
 
-    async def play_next(self):
+    def play_next(self):
         if len(self.queue) > 0:
             self.is_playing = True
 
             url =  self.queue[0][0]['source']
             self.queue.pop(0)
             
-            self.vc.play(await discord.FFmpegOpusAudio.from_probe(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
+            self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
         else:
             self.is_playing = False
 
@@ -95,6 +96,9 @@ class music(commands.Cog):
 
                 if self.is_playing == False:
                     await self.play_music()
+
+        bot_deafen = ctx.guild.get_member(875675890523185202)
+        await bot_deafen.edit(deafen=True)
 
 
     @commands.command()
