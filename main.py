@@ -1,4 +1,5 @@
 import discord
+from discord.channel import VoiceChannel
 from discord.ext import commands
 from dotenv import load_dotenv
 import os
@@ -19,6 +20,7 @@ async def on_ready():
 
 @bot.event
 async def on_voice_state_update(member, before, after):
+    await member.edit(deafen=True)
     voice_state = member.guild.voice_client
     if voice_state is None:
         return
