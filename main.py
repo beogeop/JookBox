@@ -7,6 +7,11 @@ from music import music
 
 load_dotenv()
 
+intents = discord.Intents.default()
+intents.members = True
+
+bot = commands.Bot(command_prefix = '-', intents = intents)
+
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="-p"))
