@@ -6,7 +6,7 @@
 ![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
 
 
-## Current Features
+## Features
 
 - Only joins when the channel is populated
 - Auto leave when channel is empty
