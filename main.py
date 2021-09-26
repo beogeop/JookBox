@@ -25,6 +25,9 @@ async def on_voice_state_update(member, before, after):
     if len(voice_state.channel.members) == 1:
         await asyncio.sleep(1)
         await voice_state.disconnect()
+    
+
+
 
 
 

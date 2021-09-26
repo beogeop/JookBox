@@ -39,14 +39,14 @@ class music(commands.Cog):
 
         return {'source': info['formats'][0]['url'], 'title': info['title']}
 
-    def play_next(self):
+    async def play_next(self):
         if len(self.queue) > 0:
             self.is_playing = True
 
             url =  self.queue[0][0]['source']
             self.queue.pop(0)
-
-            self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
+            
+            self.vc.play(await discord.FFmpegOpusAudio.from_probe(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
         else:
             self.is_playing = False
 
@@ -63,7 +63,7 @@ class music(commands.Cog):
                 
             self.queue.pop(0)
 
-            self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
+            self.vc.play(await discord.FFmpegOpusAudio.from_probe(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
         else:
             self.is_playing = False
 
@@ -82,7 +82,7 @@ class music(commands.Cog):
 
         embed1.set_thumbnail(url=videosResult['result'][0]['thumbnails'][0]['url'])
 
-        vc = ctx.author.voice.channel
+        vc = ctx.author.voice.channel 
         if vc is None:
             await ctx.send("You're not in the voice channel!")
         else:
@@ -95,6 +95,9 @@ class music(commands.Cog):
 
                 if self.is_playing == False:
                     await self.play_music()
+
+        await ctx.guild.change_voice_state(channel=vc, self_mute=False, self_deaf=True)
+        
 
     @commands.command()
     async def skip(self, ctx):
