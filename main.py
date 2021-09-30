@@ -1,5 +1,4 @@
 import discord
-from discord.channel import VoiceChannel
 from discord.ext import commands
 from dotenv import load_dotenv
 import os
@@ -27,10 +26,6 @@ async def on_voice_state_update(member, before, after):
         await asyncio.sleep(1)
         await voice_state.disconnect()
     
-
-
-
-
 
 bot.add_cog(music(bot))
 

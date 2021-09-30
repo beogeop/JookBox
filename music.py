@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
+
 from youtube_dl import YoutubeDL
 from youtubesearchpython.__future__ import VideosSearch
-
 
 
 class music(commands.Cog):
@@ -64,9 +64,10 @@ class music(commands.Cog):
                 
             self.queue.pop(0)
 
-            self.vc.play(await discord.FFmpegOpusAudio.from_probe(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
+            self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
         else:
             self.is_playing = False
+
 
     @commands.command()
     async def p(self, ctx, *, search_terms):
@@ -84,12 +85,13 @@ class music(commands.Cog):
         embed1.set_thumbnail(url=videosResult['result'][0]['thumbnails'][0]['url'])
 
         voice_channel = ctx.author.voice.channel
-        if voice_channel is None:
+        
+        if ctx.author.voice is None:
             await ctx.send("You're not in the voice channel!")
         else:
             song = self.search_yt(url)
             if type(song) == type(True):
-                await ctx.send("Error! Could not download song.")
+                await ctx.send("Could not download song due to age restrictions or error finding video.")
             else:
                 await ctx.send(embed=embed1)
                 self.queue.append([song, voice_channel])
@@ -100,28 +102,62 @@ class music(commands.Cog):
         bot_deafen = ctx.guild.get_member(875675890523185202)
         await bot_deafen.edit(deafen=True)
 
+    
+    @commands.command()
+    async def q(self, ctx):
+        queue_list = []
+        for count, value in enumerate(self.queue, 0):
+            queue_list.append(self.queue[count][0]['title'] + "\n")
+        if queue_list is not None:
+            for count, value in enumerate(queue_list, 1):
+                await ctx.send("Track " + str(count) + ": " + value)
+        else:
+            await ctx.send("No queued songs.")
+
+
+    @commands.command()
+    async def r(self, ctx, *, track_number):
+        queue_list = []
+        for count, value in enumerate(self.queue, 0):
+            queue_list.append(self.queue[count][0]['title'] + "\n")
+        if queue_list is not None:
+            for count, value in enumerate(queue_list, 1):
+                if str(track_number) == str(count):
+                    count -= 1
+                    self.queue.pop(count)
+                    await ctx.send("Removed song from queue!")
+        else:
+            ctx.send("Error removing song from queue.")
+
 
     @commands.command()
     async def skip(self, ctx):
         if self.vc != "":
             self.vc.stop()
-            await ctx.message.add_reaction("⏭️")
             await self.play_music()
+            await ctx.message.add_reaction("⏭️")
             
 
     @commands.command()
     async def pause(self, ctx):
-        await ctx.message.add_reaction('⏸')
-        await ctx.voice_client.pause()
+        ctx.voice_client.pause()
+        if ctx.voice_client.is_paused() is True:
+            await ctx.message.add_reaction('⏸')
+
 
     @commands.command()
     async def resume(self, ctx):
-        await ctx.message.add_reaction('⏯')
-        await ctx.voice_client.resume()
+        ctx.voice_client.resume()
+        if ctx.voice_client.is_paused() is False:
+            await ctx.message.add_reaction('⏯')
+        else:
+            pass
+
 
     @commands.command()
     async def dc(self, ctx):
-        await ctx.message.add_reaction('⏏️')
         await ctx.voice_client.disconnect()
-
-    
+        if ctx.voice_client is None:
+            await ctx.message.add_reaction('⏏️')
+        else:
+            pass
