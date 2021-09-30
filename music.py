@@ -60,7 +60,7 @@ class music(commands.Cog):
             if self.vc == "" or not self.vc.is_connected():
                 self.vc = await self.queue[0][1].connect()
             else:
-                await self.vc.move_to(self.queue[0][1])
+                self.vc.move_to(self.queue[0][1])
                 
             self.queue.pop(0)
 
@@ -111,7 +111,7 @@ class music(commands.Cog):
         if queue_list is not None:
             for count, value in enumerate(queue_list, 1):
                 await ctx.send("Track " + str(count) + ": " + value)
-        else:
+        elif queue_list is None:
             await ctx.send("No queued songs.")
 
 
@@ -127,7 +127,7 @@ class music(commands.Cog):
                     self.queue.pop(count)
                     await ctx.send("Removed song from queue!")
         else:
-            ctx.send("Error removing song from queue.")
+            await ctx.send("Error removing song from queue.")
 
 
     @commands.command()
