@@ -1,5 +1,4 @@
 pip
-python-3.9.7
 discord.py
 discord.py[voice]
 youtube_dl
