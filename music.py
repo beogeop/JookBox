@@ -57,7 +57,7 @@ class music(commands.Cog):
 
             url = self.queue[0][0]['source']
             
-            if self.vc is None or not self.vc.is_connected():
+            if self.vc == "" or not self.vc.is_connected():
                 self.vc = await self.queue[0][1].connect()
             else:
                 self.vc.move_to(self.queue[0][1])
