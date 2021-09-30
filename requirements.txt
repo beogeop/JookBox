@@ -1,3 +1,4 @@
+python
 pip
 discord.py
 discord.py[voice]
