@@ -86,7 +86,7 @@ class music(commands.Cog):
 
         voice_channel = ctx.author.voice.channel
         
-        if ctx.voice_state.voice is None:
+        if ctx.author not in voice_channel:
             await ctx.send("You're not in the voice channel!")
         else:
             song = self.search_yt(url)
