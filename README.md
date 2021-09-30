@@ -3,7 +3,7 @@
 ![Icon](https://github.com/Chejuyeong/JookBox/blob/main/images/bg2.png)
 
 # A wild Jookbox Bot has appeared!
-![python](https://img.shields.io/badge/Python-3.9.6%20-brightgreen)
+![python](https://img.shields.io/badge/Python-3.9.7%20-brightgreen)
 
 
 ## Features
