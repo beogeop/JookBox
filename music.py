@@ -55,9 +55,9 @@ class music(commands.Cog):
         if len(self.queue) > 0:
             self.is_playing = True
 
-            url =  self.queue[0][0]['source']
+            url = self.queue[0][0]['source']
             
-            if self.vc == "" or not self.vc.is_connected():
+            if self.vc is None or not self.vc.is_connected():
                 self.vc = await self.queue[0][1].connect()
             else:
                 self.vc.move_to(self.queue[0][1])
@@ -86,7 +86,7 @@ class music(commands.Cog):
 
         voice_channel = ctx.author.voice.channel
         
-        if ctx.author not in voice_channel:
+        if ctx.author.voice is None:
             await ctx.send("You're not in the voice channel!")
         else:
             song = self.search_yt(url)
