@@ -99,9 +99,6 @@ class music(commands.Cog):
                 if self.is_playing == False:
                     await self.play_music()
 
-        bot_deafen = ctx.guild.get_member(875675890523185202)
-        await bot_deafen.edit(deafen=True)
-
     
     @commands.command()
     async def q(self, ctx):
