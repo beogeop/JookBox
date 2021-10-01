@@ -165,6 +165,5 @@ class music(commands.Cog):
             colour = discord.Colour.dark_theme()
         )
         embed1.set_image(url='https://raw.githubusercontent.com/Chejuyeong/JookBox/main/images/help.png')
-        embed1.set_thumbnail(url='https://raw.githubusercontent.com/Chejuyeong/JookBox/main/images/jookbox3.png')
 
         await ctx.send(embed=embed1)
