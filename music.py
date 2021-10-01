@@ -158,3 +158,13 @@ class music(commands.Cog):
             await ctx.message.add_reaction('⏏️')
         else:
             pass
+
+    @commands.command()
+    async def h(self, ctx):
+        embed1 = discord.Embed(
+            colour = discord.Colour.default()
+        )
+        embed1.set_image(url='https://github.com/Chejuyeong/JookBox/blob/main/images/help.png')
+        embed1.set_thumbnail(url='https://github.com/Chejuyeong/JookBox/blob/main/images/jookbox3.png')
+
+        await ctx.send(embed=embed1)
