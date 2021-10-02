@@ -160,7 +160,7 @@ class music(commands.Cog):
             pass
 
     @commands.command()
-    async def h(self, ctx):
+    async def help(self, ctx):
         embed1 = discord.Embed(
             colour = discord.Colour.dark_theme()
         )
