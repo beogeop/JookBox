@@ -12,9 +12,11 @@ intents.members = True
 
 bot = commands.Bot(command_prefix = '-', intents = intents)
 
+bot.remove_command("help")
+
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="-h"))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="-help"))
     print('Logged in as {0.user}'.format(bot))
 
 @bot.event
