@@ -1,8 +1,8 @@
-pip==21.2.4
-discord.py==1.7.3
-discord.py[voice]
+pip
+nextcord
+nextcord[voice]
 youtube_dl==2021.6.6
-pynacl==1.4.0
+pynacl
 python-dotenv==0.19.0
 ffmpeg
 youtube-search-python==1.4.9

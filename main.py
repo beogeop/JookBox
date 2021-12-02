@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 from dotenv import load_dotenv
 import os
 import asyncio
@@ -7,7 +7,7 @@ from music import music
 
 load_dotenv()
 
-intents = discord.Intents.default()
+intents = nextcord.Intents.default()
 intents.members = True
 
 bot = commands.Bot(command_prefix = '-', intents = intents)
@@ -16,7 +16,7 @@ bot.remove_command("help")
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="-help"))
+    await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="-help"))
     print('Logged in as {0.user}'.format(bot))
 
 @bot.event

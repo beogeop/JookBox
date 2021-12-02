@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 from youtube_dl import YoutubeDL
 from youtubesearchpython.__future__ import VideosSearch
@@ -47,7 +47,7 @@ class music(commands.Cog):
             url =  self.queue[0][0]['source']
             self.queue.pop(0)
             
-            self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
+            self.vc.play(nextcord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
         else:
             self.is_playing = False
 
@@ -64,7 +64,7 @@ class music(commands.Cog):
                 
             self.queue.pop(0)
 
-            self.vc.play(discord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
+            self.vc.play(nextcord.FFmpegOpusAudio(url, **self.ffmpeg_opts), after=lambda e: self.play_next())
         else:
             self.is_playing = False
 
@@ -76,10 +76,10 @@ class music(commands.Cog):
         videosResult = await videosSearch.next()
         url = videosResult['result'][-1]['link']
 
-        embed1 = discord.Embed(
+        embed1 = nextcord.Embed(
             title = "Song Queued",
             description = videosResult['result'][0]['title'],
-            colour = discord.Colour.blurple()
+            colour = nextcord.Colour.blurple()
         )
 
         embed1.set_thumbnail(url=videosResult['result'][0]['thumbnails'][0]['url'])
@@ -161,8 +161,8 @@ class music(commands.Cog):
 
     @commands.command()
     async def help(self, ctx):
-        embed1 = discord.Embed(
-            colour = discord.Colour.dark_theme()
+        embed1 = nextcord.Embed(
+            colour = nextcord.Colour.dark_theme()
         )
         embed1.set_image(url='https://raw.githubusercontent.com/Chejuyeong/JookBox/main/images/help3.png')
 

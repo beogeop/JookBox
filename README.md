@@ -21,7 +21,7 @@
  
  ## Dependencies
  
- - discord.py
+ - nextcord
  - ffmpeg
  - python-dotenv
  - youtube-dl
